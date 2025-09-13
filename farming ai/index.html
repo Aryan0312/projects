@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Krishi Sakhi — Login</title>
+  <style>
+    :root {
+      --accent:#1e8f6e;
+      --bg:#f6fbf8;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --danger:#e03d3d;
+      font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body {
+      display:flex;
+      min-height:100vh;
+      background:linear-gradient(180deg,#e8f6f1,#f6fbf8);
+      color:#0f172a;
+    }
+    .left, .right {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:40px;
+    }
+    .left {
+      background:var(--card);
+      box-shadow:inset -2px 0 10px rgba(0,0,0,0.05);
+    }
+    .hero h1 {font-size:2rem;margin-bottom:10px;color:var(--accent)}
+    .hero p {color:var(--muted);margin-bottom:20px}
+    .features {display:grid;gap:12px}
+    .feature {display:flex;align-items:center;gap:12px}
+    .dot {width:40px;height:40px;border-radius:8px;background:#eaf8f3;
+          display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--accent)}
+    .right {background:var(--bg)}
+    .card {
+      background:white;
+      padding:28px;
+      border-radius:12px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.08);
+      max-width:400px;
+      margin:auto;
+    }
+    label {display:block;font-size:14px;color:var(--muted);margin-top:12px}
+    input, select {
+      width:100%;
+      padding:12px;
+      border:1px solid #ddd;
+      border-radius:8px;
+      margin-top:4px;
+    }
+    .btn {
+      margin-top:16px;
+      padding:12px;
+      width:100%;
+      border:none;
+      border-radius:8px;
+      background:var(--accent);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn.ghost {background:transparent;color:var(--accent);border:1px solid var(--accent)}
+    @media(max-width:900px) {
+      body {flex-direction:column}
+      .left, .right {flex:none;min-height:auto}
+      .card{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="left">
+    <div class="hero">
+      <h1>Krishi Sakhi</h1>
+      <p>AI-powered farming assistant for Kerala’s smallholder farmers 🌾</p>
+      <div class="features">
+        <div class="feature"><div class="dot">👤</div><span>Farmer Profiling</span></div>
+        <div class="feature"><div class="dot">🌦️</div><span>Weather-based Guidance</span></div>
+        <div class="feature"><div class="dot">📒</div><span>Activity Logs</span></div>
+        <div class="feature"><div class="dot">🤖</div><span>AI Chatbot Support</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="card">
+      <h2>Login</h2>
+      <label>Phone Number</label>
+      <input type="tel" placeholder="e.g. 98xxxx1234">
+      <label>Farmer Name</label>
+      <input type="text" placeholder="e.g. Ramesh">
+      <label>Main Crop</label>
+      <select>
+        <option>Paddy</option>
+        <option>Coconut</option>
+        <option>Banana</option>
+        <option>Vegetables</option>
+      </select>
+      <button class="btn">Login</button>
+      <a href="home.html"><button type="button" class="btn ghost">Try Demo</button></a>
+    </div>
+  </div>
+</body>
+</html>

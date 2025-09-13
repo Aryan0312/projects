@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Krishi Sakhi — Home</title>
+  <style>
+    :root {
+      --accent:#1e8f6e;
+      --bg:#f6fbf8;
+      --card:#ffffff;
+      --muted:#6b7280;
+      font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+    }
+    body {
+      margin:0;
+      background:var(--bg);
+      color:#0f172a;
+    }
+    header {
+      background:var(--accent);
+      color:white;
+      padding:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    header h1 {margin:0;font-size:20px}
+    nav a {color:white;text-decoration:none;margin-left:16px;font-weight:600}
+    .grid {
+      display:grid;
+      gap:16px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      padding:20px;
+    }
+    .card {
+      background:var(--card);
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.08);
+    }
+    .card h2 {margin-top:0;color:var(--accent)}
+    .log-entry {padding:6px 0;border-bottom:1px solid #eee}
+    input, select, textarea {
+      width:100%;
+      padding:8px;
+      border:1px solid #ddd;
+      border-radius:6px;
+      margin-top:6px;
+      margin-bottom:12px;
+    }
+    button {
+      background:var(--accent);
+      color:white;
+      padding:10px 14px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌾 Krishi Sakhi</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="chat.html">AI Chatbot</a>
+    </nav>
+  </header>
+
+  <main class="grid">
+    <!-- Weather -->
+    <div class="card">
+      <h2>Weather</h2>
+      <p id="weather">Loading weather...</p>
+    </div>
+
+    <!-- Logs -->
+    <div class="card">
+      <h2>Farm Activity Logs</h2>
+      <form id="logForm">
+        <select id="logType">
+          <option value="soil">Soil Condition</option>
+          <option value="fertilizer">Fertilizer Usage</option>
+          <option value="irrigation">Irrigation</option>
+          <option value="pest">Pest Observation</option>
+        </select>
+        <textarea id="logText" placeholder="Enter details..."></textarea>
+        <button type="submit">Add Log</button>
+      </form>
+      <div id="logList"></div>
+    </div>
+
+    <!-- Reminders -->
+    <div class="card">
+      <h2>Reminders & Alerts</h2>
+      <p>✔️ Rain expected, avoid spraying tomorrow</p>
+      <p>⚠️ Pest outbreak nearby: inspect brinjal crop</p>
+    </div>
+
+    <!-- Knowledge Engine -->
+    <div class="card">
+      <h2>Knowledge Engine</h2>
+      <p>Access crop calendars, soil management tips, and scheme updates here.</p>
+    </div>
+  </main>
+
+  <script>
+    // 🌦️ Weather API integration (OpenWeatherMap demo)
+    const weatherBox = document.getElementById("weather");
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=10.85&longitude=76.27&hourly=temperature_2m,precipitation")
+      .then(r => r.json())
+      .then(data => {
+        const temp = data.hourly.temperature_2m[0];
+        const rain = data.hourly.precipitation[0];
+        weatherBox.textContent = `Temp: ${temp}°C | Rain: ${rain}mm`;
+      })
+      .catch(() => weatherBox.textContent = "Weather unavailable");
+
+    // 📒 Farm Logs
+    const logForm = document.getElementById("logForm");
+    const logList = document.getElementById("logList");
+    const logs = JSON.parse(localStorage.getItem("farmLogs") || "[]");
+
+    function renderLogs() {
+      logList.innerHTML = "";
+      logs.forEach(l => {
+        const div = document.createElement("div");
+        div.className = "log-entry";
+        div.textContent = `${l.type}: ${l.text}`;
+        logList.appendChild(div);
+      });
+    }
+
+    logForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const type = document.getElementById("logType").value;
+      const text = document.getElementById("logText").value;
+      if (text.trim()) {
+        logs.push({type, text});
+        localStorage.setItem("farmLogs", JSON.stringify(logs));
+        renderLogs();
+        logForm.reset();
+      }
+    });
+
+    renderLogs();
+  </script>
+</body>
+</html>
